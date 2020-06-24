@@ -1,7 +1,10 @@
 # CourseraComplexesSkeletonsScript
-Script for KNUTE enrolled courses/specializations/complexes.
+Script for KNUTE (not only) enrolled courses/specializations/complexes.
+
+---
 Needed modules/libs:
-python-docx
-selenium
+- python-docx
+- selenium
+---
 Other needs:
-webdriver.exe (In our case - for Chrome)
+- webdriver.exe (In our case - for Chrome)
