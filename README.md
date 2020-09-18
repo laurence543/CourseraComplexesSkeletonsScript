@@ -1,5 +1,5 @@
 # CourseraComplexesSkeletonsScript
-Script for KNUTE (not only) enrolled courses/specializations/complexes.
+Script for Coursera enrolled courses/specializations/complexes.
 
 ---
 Needed modules/libs:
