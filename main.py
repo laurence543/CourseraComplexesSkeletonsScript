@@ -6,7 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import StaleElementReferenceException as StaleException, ElementNotVisibleException, \
-    ElementNotSelectableException
+    ElementNotSelectableException, TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -81,9 +81,11 @@ def reading_downloading(file_link, file_and_path, file_name, week_unsorted_folde
     doc_header_xpath = '//div[@class="reading-title"]/h2'
     doc_content_xpath = '//div[@class="rc-CML styled"]'
     time.sleep(3.8)
-    wait.until(EC.presence_of_element_located((By.XPATH, doc_header_xpath)))
-    wait.until(EC.presence_of_element_located((By.XPATH, doc_content_xpath)))
-    doc_header = wait.until(EC.visibility_of_element_located((By.XPATH, doc_header_xpath))).text
+
+    try:
+        doc_header = wait.until(EC.visibility_of_element_located((By.XPATH, doc_header_xpath))).text
+    except TimeoutException:
+        doc_header = "Reading"
     doc_content = wait.until(EC.visibility_of_element_located((By.XPATH, doc_content_xpath))).text
 
     document = Document()
