@@ -12,12 +12,9 @@ from selenium.webdriver.support import expected_conditions as EC
 
 # complex = set of courses
 
-downloads = 'D:/Path/To/The/Downloaded/File'
-
 chrome_options = Options()
 chrome_options.add_experimental_option('prefs', {'download.prompt_for_download': 'false',
                                                  'download.directory_upgrade': 'true',
-                                                 'download.default_directory': downloads,
                                                  'safebrowsing.enabled': 'false',
                                                  'profile.default_content_setting_values.automatic_downloads': 1,
                                                  'profile.default_content_settings.popups': 0
@@ -39,9 +36,7 @@ def video_downloading(file_link, file_folder, file_name, week_unsorted_folder):
     """
     function download video and additional materials from video page
     """
-    #href_xpath = "//a"  # for waiting
 
-    #wait.until(EC.presence_of_all_elements_located((By.XPATH, href_xpath)))
     href = file_link.find_element_by_xpath('../../../../..').get_attribute('href')
     driver.execute_script("window.open('');")
     driver.switch_to.window(driver.window_handles[2])
@@ -70,10 +65,6 @@ def video_downloading(file_link, file_folder, file_name, week_unsorted_folder):
         urllib.request.urlretrieve(video, week_unsorted_folder + f'\\{file_name}.webm')
         print('Video was downloaded, but not sorted.')
 
-    # webvtt_subs = driver.find_element_by_xpath('//li[@class="menuitem"][2]')
-    # txt_subs = driver.find_element_by_xpath('//li[@class="menuitem"][3]')
-    # webvtt_subs.click()
-    # txt_subs.click()
     driver.close()
     driver.switch_to.window(driver.window_handles[1])
 
@@ -162,14 +153,12 @@ def course_directories_tree_deploying(course_folder, main_tab):
                 file_folder = os.path.join(week_videos_folder, f'({video_files_increment}){file_name}')
                 if not os.path.exists(file_folder):
                     os.makedirs(file_folder)
-                downloads = file_folder
                 video_downloading(file_link, file_folder, file_name, week_unsorted_folder)
 
             if file_name[0:7] == 'Reading':
                 file_name = file_name.replace('Reading ', '', 1)
                 reading_files_increment += 1
                 file_and_path = os.path.join(week_readings_folder, f'({reading_files_increment}){file_name}.docx')
-                # os.mkdir(week_readings_folder + f'/({reading_files}){file_name}')
                 reading_downloading(file_link, file_and_path, file_name, week_unsorted_folder)
 
     driver.close()
